@@ -32,7 +32,7 @@ export const PROJECTS: Project[] = [
     services: ["Website Development"],
     description: "A website for Care Dent, a dental equipment and clinical solutions supplier.",
     clientUrl: "https://www.caredent.net",
-    coverImage: "/work/care-dent.png",
+    coverImage: "/work/care-dent-site.jpg",
   },
   {
     slug: "feline-genuine-lubricants",
@@ -44,6 +44,6 @@ export const PROJECTS: Project[] = [
     description:
       "Premium industrial-grade engine oils and lubricants formulated to exceed international standards.",
     clientUrl: "https://felinelube.vercel.app",
-    coverImage: "/work/feline-lube.png",
+    coverImage: "/work/feline-lube-site.jpg",
   },
 ];

@@ -15,7 +15,7 @@ const NEEDS = [
 ];
 
 const inputClasses =
-  "w-full rounded-md border border-border-soft bg-surface px-4 py-3 text-sm text-fg placeholder:text-fg-muted focus:border-accent-orange/60 focus:outline-none";
+  "w-full rounded-xl border border-white/10 bg-black/40 px-4 py-3.5 text-sm text-fg transition-all placeholder:text-fg-muted/70 hover:border-white/20 focus:border-white/30 focus:bg-black/60 focus:ring-4 focus:ring-white/[0.06] focus:outline-none";
 
 type Status = "idle" | "submitting" | "success" | "error";
 
@@ -45,8 +45,8 @@ export function ContactForm() {
 
   if (status === "success") {
     return (
-      <div className="rounded-lg border border-border-soft bg-surface px-8 py-16 text-center">
-        <p className="text-lg text-fg">Thanks — we&apos;ll be in touch shortly.</p>
+      <div className="flex flex-col items-center gap-3 px-8 py-16 text-center">
+        <p className="text-2xl font-semibold text-fg">Thanks, we&apos;ll be in touch shortly.</p>
       </div>
     );
   }
@@ -68,14 +68,13 @@ export function ContactForm() {
 
       <fieldset className="flex flex-col gap-3">
         <legend className="mb-1 text-sm text-fg-muted">What do you need?</legend>
-        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+        <div className="flex flex-wrap gap-2">
           {NEEDS.map((need) => (
-            <label
-              key={need}
-              className="flex items-center gap-2 text-sm text-fg-muted"
-            >
-              <input type="radio" name="service" value={need} className="accent-[--color-accent-orange]" />
-              {need}
+            <label key={need} className="cursor-pointer">
+              <input type="radio" name="service" value={need} className="peer sr-only" />
+              <span className="inline-flex rounded-full border border-white/10 bg-white/[0.03] px-4 py-2 text-sm text-fg-muted transition-all hover:border-white/25 hover:text-fg peer-checked:border-transparent peer-checked:bg-fg peer-checked:font-medium peer-checked:text-black peer-focus-visible:ring-2 peer-focus-visible:ring-white/40">
+                {need}
+              </span>
             </label>
           ))}
         </div>
@@ -97,14 +96,14 @@ export function ContactForm() {
       <button
         type="submit"
         disabled={status === "submitting"}
-        className="self-start rounded-full bg-fg px-6 py-3 text-sm font-medium text-bg transition-opacity hover:opacity-90 disabled:opacity-50"
+        className="self-start rounded-full bg-fg px-6 py-3 text-sm font-medium text-black transition-colors hover:bg-white disabled:opacity-50"
       >
-        {status === "submitting" ? "Sending…" : "Send Project Request"}
+        {status === "submitting" ? "Sending…" : "Send project request"}
       </button>
 
       {status === "error" && (
         <p className="text-sm text-accent-orange">
-          Something went wrong — please try again or email us directly.
+          Something went wrong. Please try again or email us directly.
         </p>
       )}
     </form>

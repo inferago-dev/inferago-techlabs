@@ -12,15 +12,12 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: "Inferago Tech & Digital Services",
   description:
-    "Inferago builds, launches and grows digital products — websites, applications, custom software, digital marketing and AI integration.",
+    "Inferago builds, launches and grows digital products: websites, applications, custom software, digital marketing and AI integration.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html
-      lang="en"
-      className={`${inter.variable} h-full antialiased [--font-mono-fallback:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace]`}
-    >
+    <html lang="en" className={`${inter.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col bg-bg text-fg">
         <Navbar />
         <main className="flex-1">{children}</main>

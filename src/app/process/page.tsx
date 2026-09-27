@@ -1,29 +1,23 @@
 import type { Metadata } from "next";
 import { Container } from "@/components/ui/container";
-import { SectionHeading } from "@/components/ui/section-heading";
-import { ProcessStep } from "@/components/process/process-step";
+import { ProcessTimeline } from "@/components/process/process-timeline";
+import { PageHero } from "@/components/shared/page-hero";
 import { CTASection } from "@/components/shared/cta-section";
 import { PROCESS_STEPS } from "@/data/services";
 
 export const metadata: Metadata = {
-  title: "Process — Inferago Tech & Digital Services",
+  title: "Process | Inferago Tech & Digital Services",
   description: "How Inferago takes a project from idea to launch and beyond.",
 };
 
 export default function ProcessPage() {
   return (
     <>
-      <section className="pt-20 pb-16 sm:pt-28">
-        <Container>
-          <SectionHeading eyebrow="Process" title="From Idea to Launch." />
-        </Container>
-      </section>
+      <PageHero eyebrow="Process" title="From Idea" highlight="to Launch." />
 
-      <section className="border-t border-border-soft py-20 sm:py-28">
-        <Container className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {PROCESS_STEPS.map((step) => (
-            <ProcessStep key={step.number} {...step} />
-          ))}
+      <section className="py-24 sm:py-32">
+        <Container>
+          <ProcessTimeline steps={PROCESS_STEPS} />
         </Container>
       </section>
 

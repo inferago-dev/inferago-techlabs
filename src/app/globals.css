@@ -1,56 +1,74 @@
 @import "tailwindcss";
 
 :root {
-  --color-bg: #050505;
-  --color-bg-secondary: #0b0b0b;
-  --color-surface: #111111;
-  --color-border: #222222;
-  --color-border-soft: rgb(255 255 255 / 10%);
-  --color-fg: #f5f5f5;
-  --color-fg-muted: #a1a1aa;
+  --color-bg: #000000;
+  --color-bg-secondary: #07070a;
+  --color-surface: #0b0b0e;
+  --color-surface-raised: #121217;
+  --color-border: #1c1c22;
+  --color-border-soft: rgb(255 255 255 / 8%);
+  --color-fg: #f5f5f4;
+  --color-fg-muted: #8e8e98;
   --color-white: #ffffff;
 
-  /* Real Inferago brand marks, pulled from inferago.com's shipped CSS/logo. */
-  --color-accent-orange: #ff3c00;
-  --color-accent-cream: #fff7a0;
-  --color-accent-blue: #0059ff;
-  --gradient-brand: linear-gradient(90deg, #ff3c00, #fff7a0, #0059ff);
+  /* Brand palette. These three are the only accent colours on the site. */
+  --color-accent-blue: #1996eb;
+  --color-accent-orange: #ef6b39;
+  --color-accent-sand: #d1c9a3;
+  --gradient-brand: linear-gradient(90deg, #1996eb, #ef6b39, #d1c9a3);
 
   --radius-sm: 8px;
   --radius-md: 14px;
-  --radius-lg: 22px;
+  --radius-lg: 20px;
 }
 
 @theme inline {
   --color-bg: var(--color-bg);
   --color-bg-secondary: var(--color-bg-secondary);
   --color-surface: var(--color-surface);
+  --color-surface-raised: var(--color-surface-raised);
   --color-border: var(--color-border);
   --color-border-soft: var(--color-border-soft);
   --color-fg: var(--color-fg);
   --color-fg-muted: var(--color-fg-muted);
-  --color-accent-orange: var(--color-accent-orange);
-  --color-accent-cream: var(--color-accent-cream);
   --color-accent-blue: var(--color-accent-blue);
+  --color-accent-orange: var(--color-accent-orange);
+  --color-accent-sand: var(--color-accent-sand);
 
   --font-sans: var(--font-inter);
-  --font-mono: var(--font-mono-fallback);
 
   --radius-sm: var(--radius-sm);
   --radius-md: var(--radius-md);
   --radius-lg: var(--radius-lg);
 }
 
+html {
+  background: var(--color-bg);
+  color-scheme: dark;
+}
+
 body {
   background: var(--color-bg);
   color: var(--color-fg);
   font-family: var(--font-sans);
+  font-feature-settings: "cv11", "ss01", "ss03";
+}
+
+h1, h2, h3 {
+  letter-spacing: -0.035em;
+  text-wrap: balance;
+}
+
+p {
+  text-wrap: pretty;
 }
 
 ::selection {
   background: var(--color-accent-orange);
-  color: #050505;
+  color: #000;
 }
+
+/* ---------- Brand gradient ---------- */
 
 .text-gradient-brand {
   background: var(--gradient-brand);
@@ -59,6 +77,102 @@ body {
   color: transparent;
 }
 
-.border-gradient-brand {
-  border-image: var(--gradient-brand) 1;
+/* ---------- Surfaces ---------- */
+
+/* Card with a solid hairline border that brightens on hover. */
+.card {
+  position: relative;
+  isolation: isolate;
+  border-radius: var(--radius-lg);
+  /* Faint light falling from the top edge. */
+  background: linear-gradient(180deg, rgb(255 255 255 / 3.5%), transparent 45%), var(--color-surface);
+  border: 1px solid var(--color-border-soft);
+  transition: transform 300ms cubic-bezier(0.2, 0.8, 0.2, 1), border-color 300ms ease;
+}
+
+.card-interactive:hover {
+  transform: translateY(-2px);
+  border-color: rgb(255 255 255 / 18%);
+}
+
+/* ---------- Motion helpers ---------- */
+
+.chip-in { animation: chip-in 800ms cubic-bezier(0.22, 1, 0.36, 1) both; }
+@keyframes chip-in {
+  from { opacity: 0; transform: scale(0.8); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+.float-slow { animation: float 7s ease-in-out infinite; }
+.float-slower { animation: float 9s ease-in-out -3s infinite; }
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-10px); }
+}
+
+/* Light sweep across a button on hover. */
+.shine {
+  overflow: hidden;
+}
+.shine::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(110deg, transparent 35%, rgb(255 255 255 / 55%) 50%, transparent 65%);
+  transform: translateX(-120%);
+  transition: transform 700ms ease;
+  pointer-events: none;
+}
+.shine:hover::after {
+  transform: translateX(120%);
+}
+
+/* Endless horizontal scroll; the content is rendered twice, so -50% loops seamlessly. */
+.marquee { animation: marquee 40s linear infinite; }
+@keyframes marquee {
+  to { transform: translateX(-50%); }
+}
+
+/* Slow rotation for the stack orbit, in either direction; hovering the orbit pauses every ring.
+   Direction lives here, not in a utility, because this unlayered shorthand would override one. */
+.orbit-cw  { animation: orbit 90s linear infinite; }
+.orbit-ccw { animation: orbit 90s linear infinite reverse; }
+@keyframes orbit {
+  to { transform: rotate(360deg); }
+}
+.orbit-wrap:hover :is(.orbit-cw, .orbit-ccw) { animation-play-state: paused; }
+
+/* A light pulse running along a timeline rail. */
+.rail-pulse-x { animation: rail-x 4.5s cubic-bezier(0.45, 0, 0.55, 1) infinite; }
+@keyframes rail-x {
+  from { left: 0%; opacity: 0; }
+  10%  { opacity: 1; }
+  90%  { opacity: 1; }
+  to   { left: 100%; opacity: 0; }
+}
+
+/* AI timeline: a light runs the rail at a steady pace (6s), and each of the four
+   stops glows as it passes. Stops are delayed by 1.5s each, a quarter of the run. */
+.rail-run-x { animation: run-x 6s linear infinite; }
+@keyframes run-x {
+  from { left: 0%; }
+  to   { left: calc(100% + 7rem); }
+}
+.rail-run-y { animation: run-y 6s linear infinite; }
+@keyframes run-y {
+  from { top: 0%; }
+  to   { top: calc(100% + 4rem); }
+}
+.stop-light { animation: stop-light 6s ease-out infinite; }
+@keyframes stop-light {
+  0%, 4%  { border-color: #ef6b39; background: #ef6b39; color: #000; }
+  30%, 100% { border-color: rgb(255 255 255 / 20%); background: var(--color-surface); color: var(--color-fg-muted); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

@@ -6,18 +6,20 @@ type ButtonProps = {
   variant?: "primary" | "secondary";
   className?: string;
   children: React.ReactNode;
+  onClick?: () => void;
 };
 
-export function Button({ href, variant = "primary", className, children }: ButtonProps) {
+export function Button({ href, variant = "primary", className, children, onClick }: ButtonProps) {
   return (
     <Link
       href={href}
+      onClick={onClick}
       className={cn(
-        "group inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-medium transition-all duration-200",
+        "group relative inline-flex items-center justify-center gap-2 rounded-full px-5 py-2.5 text-sm font-medium transition-all duration-200",
         variant === "primary" &&
-          "bg-[image:var(--gradient-brand)] text-black shadow-[0_0_0_1px_rgba(255,255,255,0.08),0_8px_24px_-8px_rgba(255,60,0,0.45)] hover:shadow-[0_0_0_1px_rgba(255,255,255,0.12),0_10px_32px_-6px_rgba(255,60,0,0.6)] hover:-translate-y-0.5",
+          "bg-fg text-black hover:bg-white",
         variant === "secondary" &&
-          "border border-border-soft text-fg hover:border-accent-orange/60 hover:bg-white/5 hover:-translate-y-0.5",
+          "border border-white/10 bg-white/[0.03] text-fg backdrop-blur-md hover:border-white/20 hover:bg-white/[0.07]",
         className
       )}
     >
