@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
+import { ArrowUpRight } from "lucide-react";
 import { Container } from "@/components/ui/container";
 
 const FOOTER_COLUMNS = [
@@ -28,32 +29,30 @@ const FOOTER_COLUMNS = [
 
 export function Footer() {
   return (
-    <footer className="border-t border-border-soft">
-      <Container className="grid grid-cols-1 gap-12 py-16 sm:grid-cols-2 lg:grid-cols-4">
-        <div className="flex flex-col gap-3 lg:col-span-1">
+    <footer className="relative overflow-hidden border-t border-white/[0.06] ">
+      <Container className="relative grid grid-cols-1 uppercase gap-12 pt-20 pb-16 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
+        <div className="flex flex-col gap-4">
           <Image
             src="/inferago-logo.png"
             alt="Inferago"
             width={1903}
             height={531}
-            className="h-6 w-auto object-contain"
+            className="h-6 w-auto self-start object-contain"
           />
-          <p className="text-sm text-fg-muted">Tech &amp; Digital Services</p>
-          <p className="max-w-xs text-sm text-fg-muted">
-            Building digital products, systems and growth engines.
+          <p className="max-w-xs text-sm leading-relaxed text-white/50 normal-case">
+            Tech &amp; Digital Services. Building digital products, systems and
+            growth engines.
           </p>
         </div>
 
         {FOOTER_COLUMNS.map((col) => (
           <div key={col.title} className="flex flex-col gap-3">
-            <span className="text-xs font-medium tracking-[0.15em] text-fg-muted uppercase">
-              {col.title}
-            </span>
+            <span className="mb-1 text-sm tracking-wide">{col.title}</span>
             {col.links.map((link) => (
               <Link
                 key={link.label}
                 href={link.href}
-                className="text-sm text-fg-muted transition-colors hover:text-fg"
+                className="w-fit text-sm text-fg-muted transition-colors hover:text-fg"
               >
                 {link.label}
               </Link>
@@ -62,24 +61,35 @@ export function Footer() {
         ))}
 
         <div className="flex flex-col gap-3">
-          <span className="text-xs font-medium tracking-[0.15em] text-fg-muted uppercase">
-            Inferago
-          </span>
+          <span className="mb-1 text-sm ">Inferago</span>
           <a
             href="https://inferago.com"
             target="_blank"
             rel="noreferrer"
-            className="text-sm text-fg-muted transition-colors hover:text-fg"
+            className="group inline-flex w-fit items-center gap-1 text-sm  text-fg-muted transition-colors hover:text-fg"
           >
             AI Services
+            <ArrowUpRight className="size-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
           </a>
-          <span className="text-sm text-fg">Tech &amp; Digital Services</span>
+          <span className="text-sm text-fg-muted">Tech &amp; Digital Services</span>
         </div>
       </Container>
 
-      <Container className="flex flex-col gap-4 border-t border-border-soft py-6 text-xs text-fg-muted sm:flex-row sm:items-center sm:justify-between">
-        <span>© {new Date().getFullYear()} Inferago</span>
-      </Container>
+      {/* Oversized wordmark, cropped by the bottom bar. */}
+      <div aria-hidden className="overflow-hidden">
+        <Container>
+          <span className="block translate-y-[18%] bg-gradient-to-b from-white/[0.14] to-white/0 bg-clip-text text-center text-[18vw] leading-none font-semibold tracking-[-0.06em] text-transparent select-none xl:text-[15rem]">
+            inferago
+          </span>
+        </Container>
+      </div>
+
+      <div className="relative border-t border-white/[0.06] bg-black">
+        <Container className="flex flex-col gap-2 py-6 text-xs tracking-tight text-fg-muted sm:flex-row sm:items-center sm:justify-between">
+          <span>© {new Date().getFullYear()} Inferago. All rights reserved.</span>
+          <span>Build. Grow. Automate.</span>
+        </Container>
+      </div>
     </footer>
   );
 }

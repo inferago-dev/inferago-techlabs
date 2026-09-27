@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
 import { Container } from "@/components/ui/container";
+import { DitherField } from "@/components/ui/dither-field";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { ContactForm } from "@/components/contact/contact-form";
 import { COMPANY_CONTACT } from "@/data/company";
 
 export const metadata: Metadata = {
-  title: "Contact — Inferago Tech & Digital Services",
+  title: "Contact | Inferago Tech & Digital Services",
   description: "Tell us what you're trying to build.",
 };
 
@@ -22,25 +23,35 @@ export default function ContactPage() {
   const channels = Object.entries(COMPANY_CONTACT).filter(([, value]) => Boolean(value));
 
   return (
-    <section className="pt-20 pb-24 sm:pt-28 sm:pb-32">
-      <Container className="grid grid-cols-1 gap-16 lg:grid-cols-[1.2fr_1fr]">
+    <section className="relative overflow-hidden pt-44 pb-24 sm:pt-52 sm:pb-32">
+      <DitherField
+        tone="grey"
+        interactive
+        className="inset-x-0 top-0 h-[520px]"
+        shape={[0.78, 0, 0.5, 0.7]}
+
+      />
+
+      <Container className="relative grid grid-cols-1 gap-12 lg:grid-cols-[1.4fr_1fr]">
         <div className="flex flex-col gap-10">
           <SectionHeading
             eyebrow="Contact"
-            title="Let's Build Something."
+            title="Let's build"
+            highlight="something."
             description="Tell us what you're trying to build. We'll help you figure out the right approach."
+            className="[&_h2]:text-5xl sm:[&_h2]:text-6xl lg:[&_h2]:text-7xl"
           />
-          <ContactForm />
+          <div className="card p-6 sm:p-8">
+            <ContactForm />
+          </div>
         </div>
 
         {channels.length > 0 && (
-          <div className="flex flex-col gap-4">
-            <span className="text-xs font-medium tracking-[0.15em] text-fg-muted uppercase">
-              Reach Us Directly
-            </span>
+          <div className="card flex flex-col gap-5 self-start p-7">
+            <span className="text-sm font-medium text-fg">Reach us directly</span>
             {channels.map(([key, value]) => (
-              <div key={key} className="flex flex-col gap-1">
-                <span className="text-xs text-fg-muted">
+              <div key={key} className="flex flex-col gap-1 border-t border-white/[0.06] pt-4">
+                <span className="text-sm text-fg-muted">
                   {CONTACT_LABELS[key as keyof typeof COMPANY_CONTACT]}
                 </span>
                 <span className="text-sm text-fg">{value}</span>

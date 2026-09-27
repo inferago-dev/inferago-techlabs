@@ -1,6 +1,6 @@
 export function TechnologyBadge({ name }: { name: string }) {
   return (
-    <span className="rounded-full border border-border-soft bg-white/[0.03] px-4 py-1.5 text-sm text-fg-muted transition-colors hover:border-accent-orange/40 hover:text-fg">
+    <span className="inline-flex rounded-full border border-white/10 bg-white/[0.02] px-3.5 py-1.5 text-sm text-fg/75 transition-colors hover:border-white/25 hover:text-fg">
       {name}
     </span>
   );
